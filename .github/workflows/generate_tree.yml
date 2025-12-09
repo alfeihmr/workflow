@@ -32,3 +32,18 @@ jobs:
         mkdir -p rom
         wget "${{ github.event.inputs.rom_url }}" \
           -O "rom/${{ github.event.inputs.rom_name }}"
+
+    - name: Clone DumprX
+      run: git clone https://github.com/DumprX/DumprX.git
+
+    - name: Install DumprX Dependencies
+      working-directory: DumprX
+      run: |
+        chmod +x setup.sh
+        bash setup.sh
+
+    - name: Dump ROM
+      working-directory: DumprX
+      run: |
+        chmod +x dumper.sh
+        bash dumper.sh "../rom/${{ github.event.inputs.rom_name }}"
