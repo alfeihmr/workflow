@@ -1,0 +1,32 @@
+name: LineageOS Tree Generator
+
+on:
+  workflow_dispatch:
+    inputs:
+      ROM_URL:
+        description: 'ROM/Firmware URL'
+        required: true
+      NAME_ZIP:
+        description: 'name zip like samsung-rom.zip'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Download ZIP
+      uses: actions/checkout@v4
+
+    - name: Install Dependecies
+      run: |
+        sudo apt update
+        sudo apt install -y \
+        bc bison build-essential ca-certificates clang curl cpio \
+        flex gcc gcc-aarch64-linux-gnu git libarchive-tools \
+        libssl-dev lld llvm make zip neofetch python3
+
+    - name: Download ROM/Firmware
+      run: |
+        mkdir rom
+        wget -O ${{ github.event.inputs.NAME_ZIP }}
