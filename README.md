@@ -1,0 +1,1 @@
+# LineageOS Device tree Generator
